@@ -1,5 +1,5 @@
 #include "PluginEditor.h"
-#include "BinaryData.h"
+#include "ChannelStripArtworkData.h"
 #include <cmath>
 
 class ChannelStripEditor::Dial final : public juce::Slider
@@ -107,8 +107,8 @@ public:
 
 ChannelStripEditor::ChannelStripEditor(ChannelStripProcessor& p)
     : AudioProcessorEditor(&p), processor(p),
-      faceplate(juce::ImageCache::getFromMemory(BinaryData::channel_strip_reference_png,
-                                                BinaryData::channel_strip_reference_pngSize))
+      faceplate(juce::ImageCache::getFromMemory(ChannelStripArtworkData::faceplate_png,
+                                                ChannelStripArtworkData::faceplate_pngSize))
 {
     setSize(366, 680);
     setResizable(false, false);
