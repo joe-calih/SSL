@@ -1,6 +1,6 @@
 # Loops Channel Strip
 
-Version 2.0.1 is a 64-bit Windows VST3 effect built with JUCE. It preserves the supplied 366 x 680 faceplate and adds a Windows installer, refined machined-metal styling, factory presets, adjustable interface scale, and Loops company information.
+Version 2.0.2 is a 64-bit Windows VST3 effect built with JUCE. It preserves the supplied 366 x 680 faceplate and adds a Windows installer, refined machined-metal styling, factory presets, adjustable interface scale, and Loops company information.
 
 Loops describes its service as a curated, royalty-free sample catalog and music-production workflow for producers. Visit [loops.co.ke](https://loops.co.ke/) or its [About page](https://loops.co.ke/about).
 
@@ -13,13 +13,14 @@ Loops describes its service as a curated, royalty-free sample catalog and music-
 - UI scale selector from 10% to 200% in 10% steps. The original interface layout is the 100% reference.
 - About and licence information with links to Loops and JUCE.
 - Windows installer installs/removes the VST3 in the shared 64-bit VST3 directory. The completion page can open Loops.co.ke.
+- Windows releases run Tracktion's `pluginval` at strictness level 5 before packaging, validating core plug-in and state save/restore behavior.
 - Host automation and saved plug-in state.
 
 The EQ and dynamics are original, conventional DSP implementations; factory presets are starting points, not exact measurements or official presets from another manufacturer. This independent plug-in is not affiliated with or endorsed by Solid State Logic.
 
 ## Install on Windows
 
-Download `ChannelStrip-v2.0.1-Windows-Setup.exe` from the [latest GitHub release](https://github.com/joe-calih/SSL/releases/latest), run it, and follow the setup wizard. Administrator permission is required to install into the shared VST3 folder. Rescan plug-ins in the DAW if it does not appear automatically. Uninstall it through Windows Installed Apps.
+Download `ChannelStrip-v2.0.2-Windows-Setup.exe` from the [latest GitHub release](https://github.com/joe-calih/SSL/releases/latest), run it, and follow the setup wizard. Administrator permission is required to install into the shared VST3 folder. Rescan plug-ins in the DAW if it does not appear automatically. Uninstall it through Windows Installed Apps.
 
 ## Build on Windows
 
@@ -33,7 +34,7 @@ cmake --build build --config Release --target ChannelStrip_VST3
 For the installer, also install Inno Setup 6 and run:
 
 ```powershell
-iscc /DAppVersion=2.0.1 installer\ChannelStrip.iss
+iscc /DAppVersion=2.0.2 installer\ChannelStrip.iss
 ```
 
 The build produces the VST3 under `build\ChannelStrip_artefacts\Release\VST3`. The setup executable is generated in `artifacts`.

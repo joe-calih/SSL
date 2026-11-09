@@ -21,6 +21,27 @@ jobs:
         run: cmake -S . -B build -A x64
       - name: Build VST3
         run: cmake --build build --config Release --target ChannelStrip_VST3
+      - name: Validate VST3 host compatibility
+        shell: pwsh
+        run: |
+          $validatorZip = Join-Path $env:RUNNER_TEMP "pluginval_Windows.zip"
+          $validatorDir = Join-Path $env:RUNNER_TEMP "pluginval"
+          curl.exe --fail --location --retry 3 --silent --show-error `
+            --output $validatorZip `
+            "https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_Windows.zip"
+          if ($LASTEXITCODE -ne 0) { throw "Could not download pluginval (exit code $LASTEXITCODE)" }
+          Expand-Archive -LiteralPath $validatorZip -DestinationPath $validatorDir -Force
+          $validator = Get-ChildItem -LiteralPath $validatorDir -Filter "pluginval.exe" -Recurse |
+            Select-Object -First 1 -ExpandProperty FullName
+          if (-not $validator) { throw "pluginval.exe was not found in the downloaded release" }
+          $plugin = Get-ChildItem -LiteralPath "build\ChannelStrip_artefacts\Release\VST3" `
+            -Directory -Filter "Channel Strip.vst3" -Recurse |
+            Select-Object -First 1 -ExpandProperty FullName
+          if (-not $plugin) { throw "The built Channel Strip VST3 bundle was not found" }
+          & $validator --strictness-level 5 --skip-gui-tests $plugin
+          if ($LASTEXITCODE -ne 0) {
+            throw "pluginval failed with exit code $LASTEXITCODE"
+          }
       - name: Install Inno Setup
         run: choco install innosetup --yes --no-progress
       - name: Package VST3 installer
