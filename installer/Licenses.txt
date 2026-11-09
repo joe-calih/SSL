@@ -1,0 +1,30 @@
+Loops Channel Strip v2.0.0
+Copyright (C) 2026 Loops.
+
+Channel Strip and its corresponding source code are licensed under the GNU
+General Public License, version 3.0. You may redistribute and modify the
+software under the terms of the included LICENSE file.
+
+Third-party software
+--------------------
+This software is built with JUCE 8.0.8.
+JUCE is available under the GNU General Public License v3.0 or a commercial
+licence. This build uses JUCE under the GPLv3 terms.
+
+GNU GPL v3.0:
+https://www.gnu.org/licenses/gpl-3.0.html
+
+JUCE licensing:
+https://juce.com/legal/
+
+Installer compiler: Inno Setup
+https://jrsoftware.org/isinfo.php
+
+Loops company website:
+https://loops.co.ke/
+
+Product terms and the corresponding source code:
+https://github.com/joe-calih/SSL
+
+This channel-strip product is an independent audio plug-in. It is not affiliated
+with or endorsed by Solid State Logic.

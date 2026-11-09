@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include <array>
+#include <limits>
 
 class ChannelStripProcessor final : public juce::AudioProcessor
 {
@@ -21,7 +22,7 @@ public:
     bool producesMidi() const override { return false; }
     bool isMidiEffect() const override { return false; }
     double getTailLengthSeconds() const override { return 0.5; }
-    int getNumPrograms() override { return 6; }
+    int getNumPrograms() override { return 18; }
     int getCurrentProgram() override { return currentProgram; }
     void setCurrentProgram(int index) override;
     const juce::String getProgramName(int index) override;
@@ -60,6 +61,14 @@ private:
     std::array<Biquad, 2> highMid;
     std::array<Biquad, 2> lowMid;
     std::array<Biquad, 2> lowShelf;
+    std::array<float, 12> lastFilterSettings {
+        std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN(),
+        std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN()
+    };
     std::array<float, 2> compressorEnvelope {};
     std::array<float, 2> gateEnvelope {};
     std::array<float, 2> gateGain { 1.0f, 1.0f };

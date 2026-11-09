@@ -19,12 +19,17 @@ private:
 
     void addDial(const char* id, juce::Rectangle<int> bounds, juce::Colour colour);
     void addButton(const char* id, const juce::String& text, juce::Rectangle<int> bounds);
+    void showAbout();
+    void drawPanelTitle(juce::Graphics&, juce::Rectangle<float>, const juce::String&);
     void loadPreset(int index);
     void timerCallback() override;
 
     ChannelStripProcessor& processor;
     juce::Image faceplate;
     juce::ComboBox presets;
+    juce::ComboBox uiScale;
+    juce::TextButton aboutButton { "i" };
+    int scalePercent = 100;
     std::vector<std::unique_ptr<juce::Component>> controls;
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>> sliderAttachments;
     std::vector<std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment>> buttonAttachments;

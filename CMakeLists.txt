@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(ChannelStrip VERSION 1.0.0 LANGUAGES CXX)
+project(ChannelStrip VERSION 2.0.0 LANGUAGES CXX)
 
 include(FetchContent)
 set(JUCE_BUILD_EXTRAS OFF CACHE BOOL "" FORCE)
@@ -21,13 +21,14 @@ juce_add_binary_data(ChannelStripArtwork
 )
 
 juce_add_plugin(ChannelStrip
-    COMPANY_NAME "Independent Audio"
+    COMPANY_NAME "Loops"
     BUNDLE_ID "audio.independent.channelstrip"
     PLUGIN_MANUFACTURER_CODE Indp
     PLUGIN_CODE ChSt
     PRODUCT_NAME "Channel Strip"
     DESCRIPTION "Vintage-style channel strip"
-    FORMATS VST3 Standalone
+    VERSION ${PROJECT_VERSION}
+    FORMATS VST3
     VST3_CATEGORIES Fx
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE

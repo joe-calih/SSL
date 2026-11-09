@@ -18,16 +18,40 @@ struct FactoryPreset
     float hp, lp, hf, hfGain, hm, hmGain, lm, lmGain, lf, lfGain;
     int ratio;
     float threshold, release, gateThreshold, gateRange, gateRelease;
+    bool split = true;
+    bool analog = false;
 };
 
 constexpr FactoryPreset factoryPresets[] {
     { 20, 20000, 8000, 0, 3000, 0, 500, 0, 100, 0, 0, -10, 0.3f, -30, 20, 0.2f },
-    { 85, 18000, 12000, 2.0f, 4200, 2.5f, 280, -2.0f, 110, 1.5f, 2, -18, 0.45f, -48, 12, 0.18f },
-    { 35, 18000, 10000, 1.0f, 3200, 1.5f, 250, -1.5f, 90, 2.0f, 3, -12, 0.2f, -42, 18, 0.16f },
-    { 30, 16000, 11000, 1.5f, 5000, 1.0f, 180, -1.0f, 75, 2.5f, 4, -15, 0.12f, -45, 24, 0.12f },
-    { 20, 20000, 9000, 0, 3500, 0, 450, 0, 120, 0, 0, 0, 0.3f, -60, 0, 0.2f },
-    { 70, 16000, 9000, 3.0f, 5000, 4.0f, 220, -3.0f, 80, 3.5f, 4, -20, 0.1f, -36, 30, 0.08f }
+    { 85, 20000, 12000, 2.0f, 4200, 2.5f, 280, -2.0f, 110, 1.5f, 2, -18, 0.45f, -48, 12, 0.18f },
+    { 75, 18000, 10000, 1.0f, 2800, 1.5f, 320, -1.0f, 140, 1.0f, 2, -20, 0.5f, -48, 10, 0.2f },
+    { 70, 20000, 15000, 2.5f, 5200, 1.0f, 300, -1.0f, 120, 0.5f, 1, -22, 0.6f, -50, 8, 0.25f },
+    { 30, 18000, 10000, 1.0f, 3200, 1.5f, 250, -1.5f, 90, 2.0f, 2, -14, 0.25f, -42, 18, 0.16f },
+    { 28, 18000, 9000, 0.5f, 4500, 1.0f, 180, -1.0f, 65, 2.0f, 3, -16, 0.12f, -40, 24, 0.12f },
+    { 45, 16000, 9500, 1.5f, 6000, 2.0f, 250, -2.5f, 100, 1.0f, 3, -18, 0.18f, -36, 30, 0.1f },
+    { 50, 18000, 11000, 2.0f, 4200, 2.0f, 220, -2.0f, 90, 1.5f, 4, -22, 0.1f, -40, 28, 0.08f },
+    { 35, 16000, 9500, 1.0f, 3500, 1.0f, 200, -1.0f, 90, 1.0f, 4, -24, 0.12f, -32, 35, 0.08f },
+    { 32, 17000, 12000, 0.5f, 4000, 0.5f, 180, -0.5f, 80, 1.5f, 2, -20, 0.25f, -40, 18, 0.15f },
+    { 85, 18000, 12000, 1.5f, 5000, 1.5f, 280, -1.0f, 130, 1.0f, 2, -22, 0.35f, -55, 8, 0.2f },
+    { 70, 20000, 10000, 0.0f, 3000, 0.0f, 250, 0.0f, 100, 0.0f, 1, -12, 0.45f, -60, 0, 0.2f },
+    { 50, 18000, 14000, 1.0f, 5000, 1.0f, 350, -1.0f, 100, 1.0f, 2, -18, 0.4f, -60, 0, 0.2f },
+    { 70, 16000, 10000, 2.0f, 4800, 3.0f, 250, -2.0f, 90, 2.0f, 3, -20, 0.12f, -38, 28, 0.08f },
+    { 20, 20000, 9000, 1.0f, 2500, 0.0f, 350, 0.0f, 120, 1.0f, 3, -16, 0.2f, -45, 22, 0.12f },
+    { 25, 18000, 10500, 2.0f, 5000, 2.5f, 240, -1.5f, 80, 2.5f, 4, -20, 0.1f, -34, 32, 0.06f },
+    { 30, 18000, 12000, 1.0f, 4000, 1.0f, 300, -1.0f, 100, 1.0f, 2, -18, 0.3f, -45, 20, 0.15f },
+    { 30, 18000, 10500, 2.0f, 5000, 2.5f, 240, -1.5f, 80, 2.5f, 4, -20, 0.1f, -34, 32, 0.06f, true, true }
 };
+
+constexpr const char* factoryPresetNames[] {
+    "Default", "Vocal - Lead", "Vocal - Warm", "Vocal - Air",
+    "Drum Bus - Glue", "Kick - Punch", "Snare - Crack", "Drums - Parallel",
+    "Bass - Tight", "Bass - Warm", "Acoustic Guitar", "Electric Guitar",
+    "Piano - Focus", "Mix Bus - Glue", "Mix Bus - Clean", "Spoken Voice",
+    "Synth - Forward", "Analog - Drive"
+};
+static_assert(sizeof(factoryPresets) / sizeof(factoryPresets[0]) == 18);
+static_assert(sizeof(factoryPresetNames) / sizeof(factoryPresetNames[0]) == 18);
 
 float decibelsToGain(float db) noexcept
 {
@@ -190,6 +214,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout ChannelStripProcessor::creat
 void ChannelStripProcessor::prepareToPlay(double sampleRate, int)
 {
     currentSampleRate = sampleRate;
+    lastFilterSettings.fill(std::numeric_limits<float>::quiet_NaN());
     for (auto& filter : highPass) filter.reset();
     for (auto& filter : lowPass) filter.reset();
     for (auto& filter : highShelf) filter.reset();
@@ -222,19 +247,33 @@ void ChannelStripProcessor::updateFilters()
     const auto hpFrequency = parameter("hpFreq");
     const auto lpFrequency = parameter("lpFreq");
     const auto hfFrequency = parameter("hfFreq");
+    const auto hfGain = parameter("hfGain");
     const auto hmFrequency = parameter("hmFreq");
+    const auto hmGain = parameter("hmGain");
     const auto lmFrequency = parameter("lmFreq");
+    const auto lmGain = parameter("lmGain");
     const auto lfFrequency = parameter("lfFreq");
-    const auto hmRange = parameter("hmRange") > 0.5f ? 3.0f : 1.0f;
-    const auto lmRange = parameter("lmRange") > 0.5f ? 3.0f : 1.0f;
+    const auto lfGain = parameter("lfGain");
+    const auto hmRange = parameter("hmRange");
+    const auto lmRange = parameter("lmRange");
+    const std::array<float, 12> settings {
+        hpFrequency, lpFrequency, hfFrequency, hfGain, hmFrequency, hmGain,
+        lmFrequency, lmGain, lfFrequency, lfGain, hmRange, lmRange
+    };
+    if (settings == lastFilterSettings)
+        return;
+
+    lastFilterSettings = settings;
     for (int channel = 0; channel < 2; ++channel)
     {
         highPass[channel].configure(highPassType, currentSampleRate, hpFrequency, 0.707f, 0.0f);
         lowPass[channel].configure(lowPassType, currentSampleRate, lpFrequency, 0.707f, 0.0f);
-        highShelf[channel].configure(highShelfType, currentSampleRate, hfFrequency, 0.707f, parameter("hfGain"));
-        highMid[channel].configure(peakType, currentSampleRate, hmFrequency, 1.0f, parameter("hmGain") * hmRange);
-        lowMid[channel].configure(peakType, currentSampleRate, lmFrequency, 1.0f, parameter("lmGain") * lmRange);
-        lowShelf[channel].configure(lowShelfType, currentSampleRate, lfFrequency, 0.707f, parameter("lfGain"));
+        highShelf[channel].configure(highShelfType, currentSampleRate, hfFrequency, 0.707f, hfGain);
+        highMid[channel].configure(peakType, currentSampleRate, hmFrequency, 1.0f,
+                                   hmGain * (hmRange > 0.5f ? 3.0f : 1.0f));
+        lowMid[channel].configure(peakType, currentSampleRate, lmFrequency, 1.0f,
+                                  lmGain * (lmRange > 0.5f ? 3.0f : 1.0f));
+        lowShelf[channel].configure(lowShelfType, currentSampleRate, lfFrequency, 0.707f, lfGain);
     }
 }
 
@@ -256,11 +295,13 @@ void ChannelStripProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce:
     const auto phase = parameter("phase") > 0.5f ? -1.0f : 1.0f;
     const auto inputGain = decibelsToGain(parameter("input")) * phase;
     const auto outputGain = decibelsToGain(parameter("output"));
-    const auto ratioChoice = static_cast<int>(parameter("compRatio"));
+    const auto ratioChoice = juce::roundToInt(parameter("compRatio") * 5.0f);
     constexpr float ratios[] { 1.0f, 2.0f, 3.0f, 4.0f, 10.0f, 20.0f };
     const auto ratio = ratios[juce::jlimit(0, 5, ratioChoice)];
     const auto compThreshold = parameter("compThreshold");
     const auto compRelease = parameter("compRelease");
+    const auto thresholdGain = decibelsToGain(compThreshold);
+    const auto compressionCurve = 1.0f - 1.0f / ratio;
     const auto gateThreshold = parameter("gateThreshold");
     const auto gateRange = parameter("gateRange");
     const auto gateRelease = parameter("gateRelease");
@@ -307,13 +348,8 @@ void ChannelStripProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce:
 
             if (compEnabled && ratio > 1.0f && compEnv > 1.0e-8f)
             {
-                const auto levelDb = juce::Decibels::gainToDecibels(compEnv);
-                const auto overDb = levelDb - compThreshold;
-                if (overDb > 0.0f)
-                {
-                    const auto compressedDb = compThreshold + overDb / ratio;
-                    sample *= decibelsToGain(compressedDb - levelDb);
-                }
+                if (compEnv > thresholdGain)
+                    sample *= std::pow(thresholdGain / compEnv, compressionCurve);
             }
 
             if (gateEnabled)
@@ -374,12 +410,18 @@ void ChannelStripProcessor::loadFactoryPreset(int index)
     set("gateThreshold", preset.gateThreshold);
     set("gateRange", preset.gateRange);
     set("gateRelease", preset.gateRelease);
+    set("split", preset.split ? 1.0f : 0.0f);
+    set("analog", preset.analog ? 1.0f : 0.0f);
+    set("eqBypass", 0.0f);
+    set("compBypass", 0.0f);
+    set("gateOn", 1.0f);
+    set("input", 0.0f);
+    set("output", 0.0f);
 }
 
 const juce::String ChannelStripProcessor::getProgramName(int index)
 {
-    static const char* names[] { "Default", "Vocal", "Punch", "Drum Bus", "Clean", "Aggressive" };
-    return names[juce::jlimit(0, getNumPrograms() - 1, index)];
+    return factoryPresetNames[juce::jlimit(0, getNumPrograms() - 1, index)];
 }
 
 void ChannelStripProcessor::getStateInformation(juce::MemoryBlock& destination)
