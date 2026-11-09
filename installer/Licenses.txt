@@ -1,4 +1,4 @@
-Loops Channel Strip v2.0.0
+Loops Channel Strip v2.0.1
 Copyright (C) 2026 Loops.
 
 Channel Strip and its corresponding source code are licensed under the GNU

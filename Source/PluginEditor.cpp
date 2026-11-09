@@ -298,13 +298,13 @@ void ChannelStripEditor::resized()
     reposition(presets, 7, 18, 220, 17);
     reposition(uiScale, 232, 18, 80, 17);
     reposition(aboutButton, 321, 18, 31, 17);
-    constexpr juce::Rectangle<int> dialBounds[] {
+    const juce::Rectangle<int> dialBounds[] {
         {34,105,38,38}, {125,63,38,38}, {207,63,38,38}, {296,103,38,38}, {206,142,38,38},
         {34,182,38,38}, {125,220,38,38}, {34,260,38,38}, {125,300,38,38}, {34,340,38,38},
         {125,461,38,38}, {34,579,38,38}, {125,541,38,38}, {296,182,38,38}, {206,221,38,38},
         {206,300,38,38}, {206,541,38,38}
     };
-    constexpr juce::Rectangle<int> buttonBounds[] {
+    const juce::Rectangle<int> buttonBounds[] {
         {124,123,40,23}, {124,180,40,23}, {124,602,40,22}, {124,386,23,35},
         {205,386,23,35}, {294,239,42,21}, {211,474,34,19}, {205,602,39,22}
     };
@@ -331,7 +331,7 @@ void ChannelStripEditor::drawPanelTitle(juce::Graphics& g, juce::Rectangle<float
 void ChannelStripEditor::showAbout()
 {
     const auto message =
-        "Channel Strip v2.0\n\n"
+        "Channel Strip v2.0.1\n\n"
         "Created by Loops, a music-production platform for high-quality, royalty-free "
         "samples. Its catalogue spans hip-hop, house, techno, Afrobeats, and cinematic "
         "sounds, with search, previews, and creator tools.\n\n"
@@ -339,16 +339,25 @@ void ChannelStripEditor::showAbout()
         "About Loops: loops.co.ke/about\n\n"
         "Channel Strip and its source are licensed under GPLv3. This plugin uses JUCE "
         "under its GPLv3 terms. See the included LICENSE file for the full licence.";
-    juce::AlertWindow::showMessageBoxAsync(
-        juce::MessageBoxIconType::InfoIcon, "About Loops", message,
-        "Visit Loops", "Licences", "Close",
-        juce::ModalCallbackFunction::create([](int result)
+    juce::PopupMenu menu;
+    menu.addItem(1, "About Loops and Channel Strip");
+    menu.addSeparator();
+    menu.addItem(2, "Visit Loops.co.ke");
+    menu.addItem(3, "GNU GPLv3 licence");
+    menu.addItem(4, "JUCE licensing");
+    menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&aboutButton),
+        [message](int result)
         {
             if (result == 1)
-                juce::URL("https://loops.co.ke/").launchInDefaultBrowser();
+                juce::AlertWindow::showMessageBoxAsync(
+                    juce::MessageBoxIconType::InfoIcon, "About Loops", message, "OK");
             else if (result == 2)
+                juce::URL("https://loops.co.ke/").launchInDefaultBrowser();
+            else if (result == 3)
                 juce::URL("https://www.gnu.org/licenses/gpl-3.0.html").launchInDefaultBrowser();
-        }));
+            else if (result == 4)
+                juce::URL("https://juce.com/legal/").launchInDefaultBrowser();
+        });
 }
 
 void ChannelStripEditor::loadPreset(int index)
