@@ -137,7 +137,6 @@ ChannelStripEditor::ChannelStripEditor(ChannelStripProcessor& p)
       faceplate(juce::ImageCache::getFromMemory(ChannelStripArtworkData::faceplate_png,
                                                 ChannelStripArtworkData::faceplate_pngSize))
 {
-    setSize(366, 680);
     setResizable(false, false);
 
     for (int preset = 0; preset < processor.getNumPrograms(); ++preset)
@@ -199,6 +198,7 @@ ChannelStripEditor::ChannelStripEditor(ChannelStripProcessor& p)
     outputAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         processor.parameters, "output", *outputFader);
 
+    setSize(366, 680);
     startTimerHz(30);
 }
 
@@ -331,7 +331,7 @@ void ChannelStripEditor::drawPanelTitle(juce::Graphics& g, juce::Rectangle<float
 void ChannelStripEditor::showAbout()
 {
     const auto message =
-        "Channel Strip v2.0.1\n\n"
+        "Channel Strip v2.0.4\n\n"
         "Created by Loops, a music-production platform for high-quality, royalty-free "
         "samples. Its catalogue spans hip-hop, house, techno, Afrobeats, and cinematic "
         "sounds, with search, previews, and creator tools.\n\n"
