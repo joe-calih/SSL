@@ -52,6 +52,7 @@ target_compile_definitions(ChannelStrip
     PUBLIC
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
+        JUCE_VST3_CAN_REPLACE_VST2=0
 )
 target_link_libraries(ChannelStrip
     PRIVATE
