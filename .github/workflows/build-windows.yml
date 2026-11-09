@@ -38,7 +38,7 @@ jobs:
             -Directory -Filter "Channel Strip.vst3" -Recurse |
             Select-Object -First 1 -ExpandProperty FullName
           if (-not $plugin) { throw "The built Channel Strip VST3 bundle was not found" }
-          & $validator --strictness-level 5 --skip-gui-tests $plugin
+          & $validator --strictness-level 6 --skip-gui-tests $plugin
           if ($LASTEXITCODE -ne 0) {
             throw "pluginval failed with exit code $LASTEXITCODE"
           }

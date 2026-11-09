@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(ChannelStrip VERSION 2.0.2 LANGUAGES CXX)
+project(ChannelStrip VERSION 2.0.3 LANGUAGES CXX)
 
 include(FetchContent)
 set(JUCE_BUILD_EXTRAS OFF CACHE BOOL "" FORCE)
