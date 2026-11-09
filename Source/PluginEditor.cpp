@@ -48,11 +48,6 @@ public:
                                                     juce::PathStrokeType::rounded));
     }
 
-    juce::String getTooltip() const override
-    {
-        return getName() + ": " + getTextFromValue(getValue());
-    }
-
 private:
     juce::Colour colour;
 };
@@ -175,6 +170,8 @@ void ChannelStripEditor::addDial(const char* id, juce::Rectangle<int> bounds, ju
     auto dial = std::make_unique<Dial>(colour);
     dial->setBounds(bounds);
     dial->setName(juce::String(id));
+    if (const auto* parameter = processor.parameters.getParameter(id))
+        dial->setTooltip(parameter->getName(64));
     addAndMakeVisible(*dial);
     sliderAttachments.push_back(
         std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(

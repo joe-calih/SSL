@@ -14,6 +14,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(JUCE)
 
 juce_add_binary_data(ChannelStripArtwork
+    NAMESPACE BinaryData
     SOURCES
         assets/channel-strip-reference.png
 )
